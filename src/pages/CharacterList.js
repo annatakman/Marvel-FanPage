@@ -9,7 +9,7 @@ export const CharacterList = () => {
   const hash = md5(timestamp + process.env.REACT_APP_PRIVATE_KEY + publicKey)
 
   useEffect(() => {
-    fetch(`https://gateway.marvel.com/v1/public/characters?ts=${timestamp}&apikey=785f108ac49ee15d64e2d1c53999f652&hash=${hash}`)
+    fetch(`https://gateway.marvel.com/v1/public/characters?limit=40&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`)
       .then(res => res.json())
       .then(json => {
         setCharacters(json.data.results)
@@ -25,7 +25,14 @@ export const CharacterList = () => {
     <section>
 
       {characters.map(character => (
-        <p key={character.id}>{character.name}</p>
+        <article key={character.id}>
+
+          <img src={`${character.thumbnail.path}/portrait_uncanny.jpg`} alt={`Picture of ${character.name}`} />
+
+          <h3>{character.name}</h3>
+
+        </article>
+
       ))}
     </section>
   )
